@@ -132,9 +132,43 @@ static unsigned getScratchSizeKey(CallingConv::ID CC) {
   }
 }
 
+// Returns the current raw value of the rsrc1 register in the metadata for a
+// particular shader stage.
+unsigned AMDGPUPALMetadata::getRsrc1Val(CallingConv::ID CC) {
+  auto rsrc1RegId = getRsrc1Reg(CC);
+  auto &N = getRegisters()[MsgPackDoc.getNode(rsrc1RegId)];
+  assert(N.getKind() == msgpack::Type::UInt &&
+         "Rsrc1Register metadata node must be of type UInt.");
+  return N.getUInt();
+}
+
 // Set the rsrc1 register in the metadata for a particular shader stage.
 // In fact this ORs the value into any previous setting of the register.
 void AMDGPUPALMetadata::setRsrc1(CallingConv::ID CC, unsigned Val) {
+  // Special handling for the granulated VGPR and SGPR counters which shouldn't
+  // be ORed. Rather the values should only be updated if the passed in value is
+  // _higher_, i.e. a max() operation is applied.
+
+  const unsigned currentRsrc1Val = getRsrc1Val(CC);
+
+  // VGPRs
+  {
+    const unsigned currentVgprBlockCount = G_00B848_VGPRS(currentRsrc1Val);
+    const unsigned newVgprBlockCount = G_00B848_VGPRS(Val);
+    if (newVgprBlockCount > currentVgprBlockCount) {
+      Val |= S_00B848_VGPRS(newVgprBlockCount);
+    }
+  }
+
+  // SGPRs
+  {
+    const unsigned currentSgprBlockCount = G_00B848_SGPRS(currentRsrc1Val);
+    const unsigned newSgprBlockCount = G_00B848_SGPRS(Val);
+    if (newSgprBlockCount > currentSgprBlockCount) {
+      Val |= S_00B848_SGPRS(newSgprBlockCount);
+    }
+  }
+
   setRegister(getRsrc1Reg(CC), Val);
 }
 
