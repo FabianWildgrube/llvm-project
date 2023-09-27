@@ -14,6 +14,7 @@
 #ifndef LLVM_LIB_TARGET_AMDGPU_AMDGPUPALMETADATA_H
 #define LLVM_LIB_TARGET_AMDGPU_AMDGPUPALMETADATA_H
 #include "llvm/BinaryFormat/MsgPackDocument.h"
+#include "llvm/IR/CallingConv.h"
 
 namespace llvm {
 
