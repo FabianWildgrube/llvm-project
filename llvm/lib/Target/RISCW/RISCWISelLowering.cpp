@@ -306,15 +306,17 @@ SDValue RISCWTargetLowering::LowerCall(TargetLowering::CallLoweringInfo &CLI,
 /// and then confiscate the rest of the parameter registers to insure
 /// this.
 void RISCWTargetLowering::HandleByVal(CCState *State, unsigned &Size,
-                                      unsigned Align) const {
+                                      Align Align) const {
   // Byval (as with any stack) slots are always at least 4 byte aligned.
-  Align = std::max(Align, 4U);
+  if (Align.value() < 4) {
+    Align = llvm::Align(4);
+  }
 
   unsigned Reg = State->AllocateReg(GPRArgRegs);
   if (!Reg)
     return;
 
-  unsigned AlignInRegs = Align / 4;
+  unsigned AlignInRegs = Align.value() / 4;
   unsigned Waste = (RISCW::X4 - Reg) % AlignInRegs;
   for (unsigned i = 0; i < Waste; ++i)
     Reg = State->AllocateReg(GPRArgRegs);

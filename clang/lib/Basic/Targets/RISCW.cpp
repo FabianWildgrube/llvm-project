@@ -17,7 +17,7 @@
 using namespace clang;
 using namespace clang::targets;
 
-ArrayRef<const char *> RISCVTargetInfo::getGCCRegNames() const {
+ArrayRef<const char *> RISCWTargetInfo::getGCCRegNames() const {
   // clang-format off
   static const char *const GCCRegNames[] = {
       // Integer registers
@@ -30,7 +30,7 @@ ArrayRef<const char *> RISCVTargetInfo::getGCCRegNames() const {
   return llvm::ArrayRef(GCCRegNames);
 }
 
-ArrayRef<TargetInfo::GCCRegAlias> RISCVTargetInfo::getGCCRegAliases() const {
+ArrayRef<TargetInfo::GCCRegAlias> RISCWTargetInfo::getGCCRegAliases() const {
   static const TargetInfo::GCCRegAlias GCCRegAliases[] = {
       {{"zero"}, "x0"}, {{"ra"}, "x1"},  {{"sp"}, "x2"},   {{"gp"}, "x3"},
       {{"tp"}, "x4"},   {{"t0"}, "x5"},  {{"t1"}, "x6"},   {{"t2"}, "x7"},

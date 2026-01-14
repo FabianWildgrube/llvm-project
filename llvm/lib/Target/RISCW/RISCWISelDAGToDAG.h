@@ -39,3 +39,5 @@ private:
   const RISCWSubtarget *Subtarget;
 };
 } // namespace llvm
+
+#endif // LLVM_LIB_TARGET_RISCW_RISCWISELDAGTODAG_H

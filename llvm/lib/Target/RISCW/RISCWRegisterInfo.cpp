@@ -53,10 +53,11 @@ BitVector RISCWRegisterInfo::getReservedRegs(const MachineFunction &MF) const {
   return Reserved;
 }
 
-void RISCWRegisterInfo::eliminateFrameIndex(MachineBasicBlock::iterator II,
+bool RISCWRegisterInfo::eliminateFrameIndex(MachineBasicBlock::iterator II,
                                             int SPAdj, unsigned FIOperandNum,
                                             RegScavenger *RS) const {
   llvm_unreachable("Unsupported eliminateFrameIndex");
+  return false;
 }
 
 bool RISCWRegisterInfo::requiresRegisterScavenging(

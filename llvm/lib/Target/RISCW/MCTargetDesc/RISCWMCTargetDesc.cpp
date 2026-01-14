@@ -47,10 +47,10 @@ static MCRegisterInfo *createRISCWMCRegisterInfo(const Triple &TT) {
 
 static MCSubtargetInfo *
 createRISCWMCSubtargetInfo(const Triple &TT, StringRef CPU, StringRef FS) {
-  std::string CPUName = CPU;
+  std::string CPUName = CPU.str();
   if (CPUName.empty())
     CPUName = "generic";
-  return createRISCWMCSubtargetInfoImpl(TT, CPUName, FS);
+  return createRISCWMCSubtargetInfoImpl(TT, CPUName, /*TuneCPU*/ CPUName, FS);
 }
 
 static MCInstPrinter *createRISCWMCInstPrinter(const Triple &T,
@@ -67,7 +67,7 @@ static MCAsmInfo *createRISCWMCAsmInfo(const MCRegisterInfo &MRI,
   MCAsmInfo *MAI = new RISCWMCAsmInfo(TT);
 
   unsigned WP = MRI.getDwarfRegNum(RISCW::X2, true);
-  MCCFIInstruction Inst = MCCFIInstruction::createDefCfa(nullptr, WP, 0);
+  MCCFIInstruction Inst = MCCFIInstruction::cfiDefCfa(nullptr, WP, 0);
   MAI->addInitialFrameState(Inst);
 
   return MAI;
