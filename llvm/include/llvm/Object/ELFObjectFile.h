@@ -1315,6 +1315,8 @@ StringRef ELFObjectFile<ELFT>::getFileFormatName() const {
       return (IsLittleEndian ? "elf32-littleriscv" : "elf32-bigriscv");
     case ELF::EM_CSKY:
       return "elf32-csky";
+    case ELF::EM_RISCW:
+      return "elf32-riscw";
     case ELF::EM_SPARC:
     case ELF::EM_SPARC32PLUS:
       return "elf32-sparc";
@@ -1403,6 +1405,13 @@ template <class ELFT> Triple::ArchType ELFObjectFile<ELFT>::getArch() const {
       return IsLittleEndian ? Triple::riscv32 : Triple::riscv32be;
     case ELF::ELFCLASS64:
       return IsLittleEndian ? Triple::riscv64 : Triple::riscv64be;
+    default:
+      report_fatal_error("Invalid ELFCLASS!");
+    }
+  case ELF::EM_RISCW:
+    switch (EF.getHeader().e_ident[ELF::EI_CLASS]) {
+    case ELF::ELFCLASS32:
+      return Triple::riscw;
     default:
       report_fatal_error("Invalid ELFCLASS!");
     }

@@ -67,6 +67,7 @@ StringRef Triple::getArchTypeName(ArchType Kind) {
     return "riscv32be";
   case riscv64be:
     return "riscv64be";
+  case riscw:          return "riscw";
   case shave:          return "shave";
   case sparc:          return "sparc";
   case sparcel:        return "sparcel";
@@ -484,6 +485,7 @@ Triple::ArchType Triple::getArchTypeForLLVMName(StringRef Name) {
       .Case("riscv64", riscv64)
       .Case("riscv32be", riscv32be)
       .Case("riscv64be", riscv64be)
+      .Case("riscw", riscw)
       .Case("hexagon", hexagon)
       .Case("sparc", sparc)
       .Case("sparcel", sparcel)
@@ -1022,6 +1024,7 @@ static Triple::ObjectFormatType getDefaultFormat(const Triple &T) {
   case Triple::riscv64:
   case Triple::riscv32be:
   case Triple::riscv64be:
+  case Triple::riscw:
   case Triple::shave:
   case Triple::sparc:
   case Triple::sparcel:
@@ -1869,6 +1872,7 @@ Triple Triple::get32BitArchVariant() const {
   case Triple::renderscript32:
   case Triple::riscv32:
   case Triple::riscv32be:
+  case Triple::riscw:
   case Triple::shave:
   case Triple::sparc:
   case Triple::sparcel:
@@ -1930,6 +1934,7 @@ Triple Triple::get64BitArchVariant() const {
   case Triple::m68k:
   case Triple::msp430:
   case Triple::r600:
+  case Triple::riscw:
   case Triple::shave:
   case Triple::sparcel:
   case Triple::tce:
@@ -2381,6 +2386,7 @@ ExceptionHandling Triple::getDefaultExceptionHandling() const {
   case Triple::systemz:
   case Triple::xcore:
   case Triple::xtensa:
+  case Triple::riscw:
     return ExceptionHandling::DwarfCFI;
   default:
     break;
