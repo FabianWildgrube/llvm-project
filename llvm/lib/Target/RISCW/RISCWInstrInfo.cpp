@@ -29,5 +29,5 @@ using namespace llvm;
 #include "RISCWGenInstrInfo.inc"
 
 RISCWInstrInfo::RISCWInstrInfo(const RISCWSubtarget &STI)
-    : RISCWGenInstrInfo(RISCW::ADJCALLSTACKDOWN, RISCW::ADJCALLSTACKUP),
+    : RISCWGenInstrInfo(STI, RISCW::ADJCALLSTACKDOWN, RISCW::ADJCALLSTACKUP),
       Subtarget(STI) {}

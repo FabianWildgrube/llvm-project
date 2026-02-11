@@ -17,11 +17,12 @@
 #include "RISCWSubtarget.h"
 #include "RISCWTargetMachine.h"
 #include "llvm/CodeGen/MachineFunction.h"
+#include "llvm/CodeGen/SelectionDAGISel.h"
 
 namespace llvm {
 class RISCWDAGToDAGISel : public SelectionDAGISel {
 public:
-  explicit RISCWDAGToDAGISel(RISCWTargetMachine &TM, CodeGenOpt::Level OL)
+    explicit RISCWDAGToDAGISel(RISCWTargetMachine &TM, CodeGenOptLevel OL)
       : SelectionDAGISel(TM, OL), Subtarget(nullptr) {}
 
   // Pass Name

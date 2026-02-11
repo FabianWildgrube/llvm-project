@@ -63,12 +63,13 @@ static Reloc::Model getEffectiveRelocModel(Optional<CodeModel::Model> CM,
 RISCWTargetMachine::RISCWTargetMachine(const Target &T, const Triple &TT,
                                        StringRef CPU, StringRef FS,
                                        const TargetOptions &Options,
-                                       Optional<Reloc::Model> RM,
-                                       Optional<CodeModel::Model> CM,
-                                       CodeGenOpt::Level OL, bool JIT)
-    : LLVMTargetMachine(T, computeDataLayout(), TT, CPU, FS, Options,
-                        getEffectiveRelocModel(CM, RM),
-                        getEffectiveCodeModel(CM, CodeModel::Medium), OL),
+                                       std::optional<Reloc::Model> RM,
+                                       std::optional<CodeModel::Model> CM,
+                                       CodeGenOptLevel OL, bool JIT)
+    : CodeGenTargetMachineImpl(
+          T, TT.computeDataLayout(Options.MCOptions.getABIName()), TT, CPU, FS,
+          Options, getEffectiveRelocModel(RM),
+          getEffectiveCodeModel(CM, CodeModel::Small), OL),
       TLOF(std::make_unique<RISCWTargetObjectFile>()) {
   // initAsmInfo will display features by llc -march=riscw on 3.7
   initAsmInfo();

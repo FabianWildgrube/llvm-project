@@ -27,6 +27,7 @@
 #include "llvm/IR/GlobalVariable.h"
 #include "llvm/Support/Debug.h"
 #include <cassert>
+#include <iterator>
 
 using namespace llvm;
 
@@ -150,7 +151,7 @@ SDValue RISCWTargetLowering::LowerFormalArguments(
   int lastInsIndex = -1;
   if (isVarArg && MFI.hasVAStart()) {
     unsigned RegIdx = CCInfo.getFirstUnallocated(GPRArgRegs);
-    if (RegIdx != array_lengthof(GPRArgRegs))
+    if (RegIdx != std::size(GPRArgRegs))
       ArgRegBegin = std::min(ArgRegBegin, (unsigned)GPRArgRegs[RegIdx]);
   }
 
