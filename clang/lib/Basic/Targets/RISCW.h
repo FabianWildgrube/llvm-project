@@ -27,19 +27,7 @@ class LLVM_LIBRARY_VISIBILITY RISCWTargetInfo : public TargetInfo {
 public:
   RISCWTargetInfo(const llvm::Triple &Triple, const TargetOptions &)
       : TargetInfo(Triple) {
-    // Description string has to be kept in sync with backend string at
-    // llvm/lib/Target/RISCW/RISCWTargetMachine.cpp
-    resetDataLayout("e"
-                    // ELF name mangling
-                    "-m:e"
-                    // 32-bit pointers, 32-bit aligned
-                    "-p:32:32"
-                    // 64-bit integers, 64-bit aligned
-                    "-i64:64"
-                    // 32-bit native integer width i.e register are 32-bit
-                    "-n32"
-                    // 128-bit natural stack alignment
-                    "-S128");
+    resetDataLayout();
     BFloat16Width = 16;
     BFloat16Align = 16;
     BFloat16Format = &llvm::APFloat::BFloat();
