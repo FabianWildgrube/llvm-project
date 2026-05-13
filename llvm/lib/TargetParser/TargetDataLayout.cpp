@@ -318,6 +318,30 @@ static std::string computeRISCVDataLayout(const Triple &TT, StringRef ABIName) {
   return Ret;
 }
 
+static std::string computeRISCWDataLayout(const Triple &TT, StringRef ABIName) {
+  std::string Ret = "";
+
+  // Little endian
+  Ret += "e";
+
+  // ELF name mangling
+  Ret += "-m:e";
+
+  // 32-bit pointers, 32-bit aligned
+  Ret += "-p:32:32";
+
+  // 64-bit integers, 64 bit aligned
+  Ret += "-i64:64";
+
+  // 32-bit native integer width i.e register are 32-bit
+  Ret += "-n32";
+
+  // 128-bit natural stack alignment
+  Ret += "-S128";
+
+  return Ret;
+}
+
 static std::string computeSparcDataLayout(const Triple &T) {
   const bool Is64Bit = T.isSPARC64();
 
@@ -597,6 +621,8 @@ std::string Triple::computeDataLayout(StringRef ABIName) const {
   case Triple::riscv32be:
   case Triple::riscv64be:
     return computeRISCVDataLayout(*this, ABIName);
+  case Triple::riscw:
+    return computeRISCWDataLayout(*this, ABIName);
   case Triple::sparc:
   case Triple::sparcv9:
   case Triple::sparcel:
