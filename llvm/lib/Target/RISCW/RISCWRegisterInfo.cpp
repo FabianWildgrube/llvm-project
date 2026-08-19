@@ -81,5 +81,5 @@ bool RISCWRegisterInfo::trackLivenessAfterRegAlloc(
 }
 
 Register RISCWRegisterInfo::getFrameRegister(const MachineFunction &MF) const {
-  llvm_unreachable("Unsupported getFrameRegister");
+  return RISCW::X2; // sp
 }
