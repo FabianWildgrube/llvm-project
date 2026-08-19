@@ -13,6 +13,7 @@
 
 #include "RISCWRegisterInfo.h"
 #include "RISCWSubtarget.h"
+#include "MCTargetDesc/RISCWMCTargetDesc.h"
 #include "llvm/Support/Debug.h"
 
 #define GET_REGINFO_TARGET_DESC

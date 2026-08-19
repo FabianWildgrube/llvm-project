@@ -15,6 +15,7 @@
 #include "RISCWISelLowering.h"
 #include "RISCWSubtarget.h"
 #include "RISCWTargetMachine.h"
+#include "MCTargetDesc/RISCWMCTargetDesc.h"
 #include "llvm/CodeGen/CallingConvLower.h"
 #include "llvm/CodeGen/MachineFrameInfo.h"
 #include "llvm/CodeGen/MachineFunction.h"

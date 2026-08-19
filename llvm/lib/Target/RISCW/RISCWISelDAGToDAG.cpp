@@ -13,6 +13,7 @@
 
 #include "RISCWSubtarget.h"
 #include "RISCWTargetMachine.h"
+#include "MCTargetDesc/RISCWMCTargetDesc.h"
 #include "llvm/CodeGen/MachineFunction.h"
 #include "llvm/CodeGen/SelectionDAGISel.h"
 

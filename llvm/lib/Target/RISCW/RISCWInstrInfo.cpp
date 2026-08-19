@@ -15,6 +15,7 @@
 
 #include "RISCWMachineFunction.h"
 #include "RISCWTargetMachine.h"
+#include "MCTargetDesc/RISCWMCTargetDesc.h"
 #include "llvm/ADT/STLExtras.h"
 #include "llvm/CodeGen/MachineInstrBuilder.h"
 #include "llvm/MC/TargetRegistry.h"
