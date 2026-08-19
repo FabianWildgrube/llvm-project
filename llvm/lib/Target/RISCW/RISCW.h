@@ -15,13 +15,16 @@
 #ifndef LLVM_LIB_TARGET_RISCW_RISCW_H
 #define LLVM_LIB_TARGET_RISCW_RISCW_H
 
-#include "MCTargetDesc/RISCWMCTargetDesc.h"
-#include "llvm/Target/TargetMachine.h"
-
 namespace llvm {
 class FunctionPass;
+class PassRegistry;
+class RISCWTargetMachine;
+enum class CodeGenOptLevel;
 
 // Declare functions to create passes here!
+FunctionPass* createRISCWISelDag(RISCWTargetMachine& TM, CodeGenOptLevel OptLevel);
+
+void initializeRISCWDAGToDAGISelLegacyPass(PassRegistry &);
 
 } // namespace llvm
 

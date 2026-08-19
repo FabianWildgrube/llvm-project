@@ -13,7 +13,6 @@
 //===----------------------------------------------------------------------===//
 
 #include "RISCWTargetMachine.h"
-#include "RISCWISelDAGToDAG.h"
 #include "RISCWSubtarget.h"
 #include "RISCWTargetObjectFile.h"
 #include "TargetInfo/RISCWTargetInfo.h"
@@ -46,6 +45,9 @@ extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeRISCWTarget() {
   // Register the target.
   //- Little endian Target Machine
   RegisterTargetMachine<RISCWTargetMachine> X(getTheRISCWTarget());
+
+  auto& PR = *PassRegistry::getPassRegistry();
+  initializeRISCWDAGToDAGISelLegacyPass(PR);
 }
 
 static Reloc::Model getEffectiveRelocModel(const Triple &TT,
@@ -126,7 +128,7 @@ TargetPassConfig *RISCWTargetMachine::createPassConfig(PassManagerBase &PM) {
 // Install an instruction selector pass using
 // the ISelDag to gen RISCW code.
 bool RISCWPassConfig::addInstSelector() {
-  addPass(new RISCWDAGToDAGISel(getRISCWTargetMachine(), getOptLevel()));
+  addPass(createRISCWISelDag(getRISCWTargetMachine(), getOptLevel()));
   return false;
 }
 
